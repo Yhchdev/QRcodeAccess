@@ -6,6 +6,9 @@ from flask_socketio import SocketIO
 
 eventlet.monkey_patch()
 
+
+from app.access import access
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # 允许所有域名跨域
 CORS(app, supports_credentials=True)
@@ -18,6 +21,9 @@ app.config['MQTT_KEEPALIVE'] = 5
 app.config['MQTT_TLS_ENABLED'] = False
 mqtt = Mqtt(app)
 socketio = SocketIO(app)
+
+
+app.register_blueprint(access, url_prefix='/access')
 
 
 
