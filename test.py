@@ -42,3 +42,17 @@ reader = zxing.BarCodeReader()
 decode = reader.decode("testEn.jpg")
 
 print(decode.parsed)
+
+
+
+
+
+
+
+
+import hashlib
+
+sha256 = hashlib.sha256()
+sha256.update(string.encode('utf-8'))
+res = sha256.hexdigest()
+print("sha256加密结果:",res)

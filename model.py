@@ -29,6 +29,7 @@ class AccessInfo(Base):
     sex = Column(CHAR(2), nullable=False)
     phone = Column(String(255), nullable=False)
     id_card = Column(String(255), nullable=False)
+    idcard_sha256 = Column(String(255), nullable=False)
     address = Column(String(1000))
     people_num = Column(INTEGER(5))
     plate_num = Column(String(255))
@@ -39,8 +40,13 @@ class AccessInfo(Base):
     respondent_name = Column(String(255), nullable=False)
     respondent_dept = Column(String(255), nullable=False)
 
+    # 插入数据
+    def insertOne(self,accessInfo):
 
-    def insertOne(self):
-
-        session.add()
+        session.add(accessInfo)
         session.commit()
+
+    # 根据加密后的 身份证信息 查询单个对象
+    def queryObject(self,idcard_sha256):
+        accessInfo= session.query(AccessInfo).filter(AccessInfo.idcard_sha256).first()
+        return accessInfo
