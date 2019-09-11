@@ -28,7 +28,6 @@ def partForm():
 # app post上传的数据 => 保存数据
 @access_blueprint.route('/all/',methods = ['POST'])
 def access():
-    accessObj = AccessInfo()
     data = request.get_json()
     respondent_name = data.get('respondent_name')
     respondent_dept = data.get('respondent_dept')
@@ -36,6 +35,12 @@ def access():
 
     info = {"name":name,"phone":phone,"idCard":id_card}
     img_base64 = make_code(info)
+
+    access_new = AccessInfo(name=name,sex=sex,phone=phone,address=address,id_card=id_card
+                            ,idcard_sha256=id_card,people_num=people_num,cause=cause,data = date,dataEnd = dateEnd
+                            ,carry=carry,respondent_name=respondent_name,respondent_dept=respondent_dept)
+
+    insertOne(access_new)
 
 
     return img_base64
