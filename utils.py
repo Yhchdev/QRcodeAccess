@@ -1,4 +1,7 @@
 import hashlib
+import qrcode
+import base64
+import io
 
 
 
@@ -9,7 +12,18 @@ def sha256_digest(idcard):
     res = sha256.hexdigest()
     return res
 
+
 # 生成二维码
+def make_code(info):
+    img = qrcode.make(data=info)
+
+    buf = io.BytesIO()
+    img.save(buf, format='PNG')
+    image_stream = buf.getvalue()
+    heximage = base64.b64encode(image_stream)
+    b64img = 'data:image/png;base64,' + heximage.decode()
+    return b64img
+
 
 
 # 解析二维码

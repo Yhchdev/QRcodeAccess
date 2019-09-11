@@ -4,8 +4,7 @@ from flask import request
 import time
 
 from model import *
-
-#from utils import *
+from utils import *
 
 access_blueprint = Blueprint('access',__name__)
 
@@ -33,12 +32,13 @@ def access():
     data = request.get_json()
     respondent_name = data.get('respondent_name')
     respondent_dept = data.get('respondent_dept')
-    access_new = AccessInfo(name=name,sex=sex,)
-
-    accessObj.insertOne(access_new)
 
 
-    return "success"
+    info = {"name":name,"phone":phone,"idCard":id_card}
+    img_base64 = make_code(info)
+
+
+    return img_base64
 
 
 

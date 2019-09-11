@@ -41,10 +41,10 @@ class AccessInfo(Base):
     respondent_dept = Column(String(255), nullable=False)
 
     # 插入数据
-    def insertOne(self,accessInfo):
-
-        session.add(accessInfo)
+    def insertOne(self,access_new):
+        session.add(access_new)
         session.commit()
+        session.close()
 
     # 根据加密后的 身份证信息 查询单个对象
     def queryObject(self,idcard_sha256):
