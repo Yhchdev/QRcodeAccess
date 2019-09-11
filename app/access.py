@@ -1,34 +1,46 @@
 from flask import jsonify
 from flask import Blueprint
+from flask import request
 import time
 
 from model import *
 
-from utils import *
+#from utils import *
+
+access_blueprint = Blueprint('access',__name__)
 
 
-access = Blueprint('access',__name__)
-
-
-
+@access_blueprint.route('/part/',methods= ['POST'])
+def partForm():
+    global name,sex,phone,address,id_card,people_num,cause,date,dateEnd,carry
+    data = request.get_json()
+    name = data.get('name')
+    sex = data.get('sex')
+    phone = data.get('phone')
+    address = data.get('address')
+    id_card = data.get('id_card')
+    people_num = data.get('people_num')
+    cause = data.get('cause')
+    date = data.get('date')
+    dateEnd = data.get('dateEnd')
+    carry = data.get('carry')
+    return "success"
 
 # app post上传的数据 => 保存数据
-@access.route('/access/',methods = ['POST'])
+@access_blueprint.route('/all/',methods = ['POST'])
 def access():
-    # 获取post表单数据
+    accessObj = AccessInfo()
+    data = request.get_json()
+    respondent_name = data.get('respondent_name')
+    respondent_dept = data.get('respondent_dept')
+    access_new = AccessInfo(name=name,sex=sex,)
 
-    accessInfo = AccessInfo()
-
-    accessInfo.name = ""
-    accessInfo.sex = ""
+    accessObj.insertOne(access_new)
 
 
+    return "success"
 
-    idcard_sha256 = sha256_digest(idcard=);
 
-    accessInfo.idcard_sha256 = idcard_sha256;
-
-    one = accessInfo.insertOne(accessInfo)
 
 
 

@@ -3,11 +3,11 @@ from flask import Flask
 from flask_mqtt import Mqtt
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from flask import Blueprint
 
-eventlet.monkey_patch()
+#eventlet.monkey_patch()
 
-
-from app.access import access
+from app.access import access_blueprint
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # 允许所有域名跨域
@@ -23,8 +23,7 @@ mqtt = Mqtt(app)
 socketio = SocketIO(app)
 
 
-app.register_blueprint(access, url_prefix='/access')
-
+app.register_blueprint(access_blueprint, url_prefix='/access')
 
 
 # 连接后 =>订阅主题
