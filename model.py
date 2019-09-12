@@ -36,7 +36,7 @@ class AccessInfo(Base):
     cause = Column(String(2000), nullable=False)
     carry = Column(String(1000))
     time_start = Column(String(255), nullable=False)
-    tiem_end = Column(String(255), nullable=False)
+    time_end = Column(String(255), nullable=False)
     respondent_name = Column(String(255), nullable=False)
     respondent_dept = Column(String(255), nullable=False)
 
