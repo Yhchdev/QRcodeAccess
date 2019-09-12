@@ -7,7 +7,6 @@ from sqlalchemy.orm import create_session
 
 # 数据库的连接配置
 from configs import DB_URI
-
 Base = declarative_base()
 
 # 数据库引擎
@@ -17,13 +16,11 @@ metadata = Base.metadata
 
 
 # 创建事务
-
 session = create_session(bind=engin)
 
 
 class AccessInfo(Base):
     __tablename__ = 'access_info'
-
     id = Column(INTEGER(11), primary_key=True)
     name = Column(String(255), nullable=False)
     sex = Column(CHAR(2), nullable=False)
@@ -31,7 +28,7 @@ class AccessInfo(Base):
     id_card = Column(String(255), nullable=False)
     idcard_sha256 = Column(String(255), nullable=False)
     address = Column(String(1000))
-    people_num = Column(INTEGER(5))
+    people_num = Column(String(1000))
     plate_num = Column(String(255))
     cause = Column(String(2000), nullable=False)
     carry = Column(String(1000))
@@ -40,13 +37,17 @@ class AccessInfo(Base):
     respondent_name = Column(String(255), nullable=False)
     respondent_dept = Column(String(255), nullable=False)
 
-    # 插入数据
-    def insertOne(self,access_new):
-        session.add(access_new)
-        session.commit()
-        session.close()
 
-    # 根据加密后的 身份证信息 查询单个对象
-    def queryObject(self,idcard_sha256):
-        accessInfo= session.query(AccessInfo).filter(AccessInfo.idcard_sha256).first()
-        return accessInfo
+
+# 插入数据
+def insertOne(access_new):
+    session.begin()
+    session.add(access_new)
+    session.commit()
+    session.close()
+
+
+# 根据加密后的 身份证信息 查询单个对象
+def queryObject(idcard_sha256):
+    accessInfo = session.query(AccessInfo).filter(AccessInfo.idcard_sha256 == idcard_sha256).first()
+    return accessInfo

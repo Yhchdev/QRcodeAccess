@@ -3,8 +3,6 @@ import qrcode
 import base64
 import io
 
-
-
 # 身份信息sha256加密
 def sha256_digest(idcard):
     sha256 = hashlib.sha256()

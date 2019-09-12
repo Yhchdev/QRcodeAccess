@@ -6,6 +6,7 @@
 
 import qrcode
 import zxing
+import requests
 
 
 # # unit1 str 转 json
@@ -37,16 +38,11 @@ import zxing
 
 # unit4 解析二维码
 
-reader = zxing.BarCodeReader()
-
-decode = reader.decode("decode.png",)
-
-print(decode.parsed)
-
-
-
-
-
+# reader = zxing.BarCodeReader()
+#
+# decode = reader.decode("decode.png",)
+#
+# print(decode.parsed)
 
 
 
@@ -56,3 +52,5 @@ print(decode.parsed)
 # sha256.update(string.encode('utf-8'))
 # res = sha256.hexdigest()
 # print("sha256加密结果:",res)
+
+print(requests.get("http://127.0.0.1:5000/mqtt/pub/error"))

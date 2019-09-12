@@ -3,11 +3,9 @@ from flask import Flask
 from flask_mqtt import Mqtt
 from flask_cors import CORS
 from flask_socketio import SocketIO
-from flask import Blueprint
-
-#eventlet.monkey_patch()
 
 from app.access import access_blueprint
+from app.service import prossMsg
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # 允许所有域名跨域
@@ -32,12 +30,10 @@ def handle_connect(client, userdata, flags, rc):
     mqtt.subscribe('qrcode')
     print("Connected with result code " + str(rc))
 
-
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
     # 调用处理消息的函数
-    print(str(message.payload))
-
+    prossMsg(message.payload)
 
 
 
@@ -46,8 +42,6 @@ def handle_mqtt_message(client, userdata, message):
 def pub_my_msg(want_to_pub):
     mqtt.publish('result',want_to_pub)
     return want_to_pub
-
-
 
 
 if __name__ == '__main__':
